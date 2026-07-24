@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build output
+dist/
+out/
+build/
+*.exe
+*.dmg
+*.AppImage
+*.snap
+*.deb
+*.rpm
+
+# Electron-builder
+release/
+
+# Runtime environments (bundled at build time)
+assets/TinyTeX/
+assets/python-env/
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.production
+
+# SQLite database (runtime data)
+*.db
+*.sqlite
+*.sqlite3
+
+# Workspace runtime data
+workspace/
+
+# Temporary files
+*.tmp
+*.bak
+
+# Bundled paper fonts (large runtime assets)
+projects/**/fonts/*.otf
+projects/**/fonts/*.ttf

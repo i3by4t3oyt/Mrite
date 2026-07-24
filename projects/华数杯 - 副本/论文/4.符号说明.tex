@@ -1,0 +1,25 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{符号说明}
+
+本文使用的主要符号及其含义如表\ref{tab:符号说明}所示。
+
+% longtable：可跨页，>{\centering\arraybackslash}p{} 居中，比例按内容调整
+\begin{longtable}{>{\centering\arraybackslash}p{0.18\textwidth}>{\centering\arraybackslash}p{0.78\textwidth}}
+  \caption{符号说明}
+  \label{tab:符号说明} \\
+  \toprule
+  符号 & 说明 \\
+  \midrule
+  \endfirsthead
+  \caption{符号说明（续）} \\
+  \toprule
+  符号 & 说明 \\
+  \midrule
+  \endhead
+  \bottomrule
+  \endfoot
+  ... & ... \\
+  ... & ... \\
+  ... & ...
+\end{longtable}

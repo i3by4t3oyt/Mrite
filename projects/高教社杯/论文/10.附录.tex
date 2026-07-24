@@ -1,0 +1,22 @@
+
+\makeatletter
+\let\@oldaddcontentsline\addcontentsline
+\renewcommand{\addcontentsline}[3]{}
+\section*{附录}
+\let\addcontentsline\@oldaddcontentsline
+\makeatother
+
+\begin{table}[H]
+  \centering
+  \caption{附件说明表}
+  \label{tab:appendix}
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabularx}{\textwidth}{LX}
+    \toprule
+    文件 & 说明 \\
+    \midrule
+    问题一\_xxx.py & 问题1求解代码 \\
+    xxx.png & xxx图 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

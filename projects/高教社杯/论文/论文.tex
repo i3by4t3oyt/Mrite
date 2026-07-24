@@ -1,0 +1,82 @@
+\PassOptionsToPackage{quiet}{xeCJK}
+\documentclass[withoutpreface,bwprint]{format}
+\usepackage{etoolbox}
+\usepackage{ctex}
+\BeforeBeginEnvironment{tabular}{\zihao{-5}}
+% 参考文献改用纯tex格式，不再需要natbib+bibtex
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{url}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+
+\renewcommand{\textbf}[1]{{\song\bfseries #1}}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\tikzset{
+  box/.style={rectangle, draw, minimum width=3.2cm, minimum height=0.9cm, align=center},
+  arrow/.style={thick, -{Stealth}}
+}
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 正文
+\begin{document}
+
+
+% 标题
+{\centering\zihao{3}\bfseries 论文标题\par}
+
+\setcounter{page}{1}
+
+\thispagestyle{empty}
+
+\input{0.摘要.tex}
+\thispagestyle{empty}
+
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+
+\setcounter{page}{1}
+
+\input{1.引言.tex}
+
+\input{2.总体分析.tex}
+
+\input{3.模型假设.tex}
+
+\input{4.符号说明.tex}
+
+\input{5.模型的建立与求解.tex}
+
+\input{6.模型检验.tex}
+
+\input{7.模型评价.tex}
+
+\input{8.模型改进推广.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 参考文献
+\newpage
+\input{9.参考文献.tex}
+
+
+\newpage
+\input{10.附录.tex}
+
+
+\end{document}

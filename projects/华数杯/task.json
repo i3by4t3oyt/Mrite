@@ -1,0 +1,15 @@
+{
+  "command": "start",
+  "timestamp": "2026-06-27T18:59:31.588Z",
+  "topicFiles": [
+    "/Users/rzn/Desktop/IP计划/阮老师个人IP产品/1.数模agent-tauri/6.mrite数模agent -v1.6/workspace/默认_2026-06-28_02-59-08/题目/A题 毕业生就业问题.doc"
+  ],
+  "dataFiles": [
+    "/Users/rzn/Desktop/IP计划/阮老师个人IP产品/1.数模agent-tauri/6.mrite数模agent -v1.6/workspace/默认_2026-06-28_02-59-08/数据/毕业生就业问题附件.xls"
+  ],
+  "projectPath": "/Users/rzn/Desktop/IP计划/阮老师个人IP产品/1.数模agent-tauri/6.mrite数模agent -v1.6/projects/默认",
+  "contestInfo": {
+    "teamCode": "",
+    "problemNumber": ""
+  }
+}

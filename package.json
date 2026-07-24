@@ -1,0 +1,66 @@
+{
+  "name": "mrite-v2",
+  "version": "2.2.0",
+  "description": "Mrite v2 — 数模论文AI自动生成桌面应用",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "0.3.191",
+    "@anthropic-ai/claude-code": "^2.1.191",
+    "@anthropic-ai/sdk": "^0.106.0",
+    "@jtabet/anthropic-openai-bridge": "^0.3.0",
+    "better-sqlite3": "^12.11.1",
+    "pdfjs-dist": "^6.0.227",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^26.0.0"
+  },
+  "build": {
+    "appId": "com.mrite.app",
+    "productName": "Mrite",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "package.json",
+      "src/**/*",
+      "renderer/**/*",
+      "projects/**/*",
+      "assets/icons/**/*",
+      "assets/python-requirements-base.txt"
+    ],
+    "asarUnpack": [
+      "assets/python-env/**/*",
+      "assets/TinyTeX/**/*"
+    ],
+    "win": {
+      "target": ["nsis"],
+      "icon": "assets/icons/icon.ico"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "icon": "assets/icons/icon_1024.png"
+    },
+    "linux": {
+      "target": ["AppImage"],
+      "icon": "assets/icons/icon_256.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
+  },
+  "author": "Mrite Team",
+  "license": "MIT"
+}

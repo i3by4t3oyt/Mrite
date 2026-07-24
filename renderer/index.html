@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="h-full overflow-hidden">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" href="style.css">
+  <!-- KaTeX 数学公式渲染 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body class="h-full overflow-hidden font-[-apple-system,BlinkMacSystemFont,'SF_Pro_Display','Helvetica_Neue',sans-serif] text-[13px] text-zinc-700 antialiased select-none bg-white">
+<div id="splashScreen" class="splash"><span class="splash-brand" id="splashBrand">Mrite</span><span class="splash-tag" id="splashTag">全网最先进的数学建模智能体</span></div>
+
+<div id="app" class="app-layout">
+
+  <!-- 自定义标题栏（拖拽区域） -->
+  <div class="app-titlebar">
+    <span class="app-titlebar-text">Mrite</span>
+  </div>
+
+  <!-- 左侧导航栏 -->
+  <nav class="app-nav">
+    <button class="app-nav-btn active" id="btnHome" onclick="Mrite._navTo(this)" title="主页">
+      <span class="app-nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.5 20v-6h5v6"/></svg></span>
+      <span class="app-nav-label">主页</span>
+    </button>
+    <div class="app-nav-middle">
+      <button class="app-nav-btn" id="btnTask" onclick="Mrite._navTo(this)" title="任务">
+        <span class="app-nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="m10 8 5 4-5 4V8z" fill="currentColor" stroke="none"/></svg></span>
+        <span class="app-nav-label">任务</span>
+      </button>
+      <button class="app-nav-btn" id="btnView" onclick="Mrite._navTo(this)" title="文件">
+        <span class="app-nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h3.2l2 2.5h5.8A2.5 2.5 0 0 1 20 9v8.5a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11z"/><path d="M4 9h16"/></svg></span>
+        <span class="app-nav-label">文件</span>
+      </button>
+    </div>
+    <div class="app-nav-bottom">
+      <button class="app-nav-btn" id="btnSettings" onclick="Mrite._navTo(this)" title="设置">
+        <span class="app-nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9.67 3.54a2.3 2.3 0 0 1 4.66 0l.18 1.16a2.3 2.3 0 0 0 3.1 1.79l1.08-.44a2.3 2.3 0 0 1 2.33 4.04l-.91.72a2.3 2.3 0 0 0 0 3.58l.91.72a2.3 2.3 0 0 1-2.33 4.04l-1.08-.44a2.3 2.3 0 0 0-3.1 1.79l-.18 1.16a2.3 2.3 0 0 1-4.66 0l-.18-1.16a2.3 2.3 0 0 0-3.1-1.79l-1.08.44a2.3 2.3 0 0 1-2.33-4.04l.91-.72a2.3 2.3 0 0 0 0-3.58l-.91-.72a2.3 2.3 0 0 1 2.33-4.04l1.08.44a2.3 2.3 0 0 0 3.1-1.79l.18-1.16Z"/><circle cx="12" cy="12" r="3.2"/></svg></span>
+        <span class="app-nav-label">设置</span>
+      </button>
+    </div>
+  </nav>
+
+  <main id="panelArea" class="app-main">
+
+                <div id="welcomePanel" class="welcome-home">
+      <!-- 品牌区 -->
+      <div class="wh-top">
+        <img src="../assets/icons/icon_128.png" alt="Mrite Logo" class="wh-brand-logo">
+        <div class="wh-brand-wrapper">
+          <div class="wh-brand">
+            <span class="home-brand">Mrite</span>
+            <span class="home-version">v2.1.0</span>
+          </div>
+        </div>
+        <p class="wh-tagline">数学建模竞赛论文 · AI 全自动生成</p>
+        <p class="wh-sub">基于 Claude Code · Python · TinyTeX 实现的全自动数模论文生成</p>
+      </div>
+
+      <!-- 主体 -->
+      <div class="wh-main">
+        <!-- 左列：流程 + 数据 + 状态 -->
+        <div class="wh-left-col">
+          <!-- 流程条 -->
+          <div class="wh-flow">
+            <div class="wh-step"><span class="wh-step-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg></span><span class="wh-step-label">上传赛题</span></div>
+            <span class="wh-arrow">→</span>
+            <div class="wh-step"><span class="wh-step-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93 7.76 7.76"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 7.76 2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg></span><span class="wh-step-label">智能求解</span></div>
+            <span class="wh-arrow">→</span>
+            <div class="wh-step"><span class="wh-step-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span><span class="wh-step-label">生成论文</span></div>
+            <span class="wh-arrow">→</span>
+            <div class="wh-step"><span class="wh-step-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 15h8"/><path d="M8 18h5"/></svg></span><span class="wh-step-label">输出PDF</span></div>
+          </div>
+          <!-- 运行数据 -->
+          <div class="dash" id="whDash">
+            <!-- 数据概览 -->
+            <div class="dash-section-title">运行数据</div>
+            <div class="dash-stats">
+              <div class="ds"><b id="whDashPapers">--</b><span>累计任务</span></div>
+              <div class="ds"><b id="whDashTokens">--</b><span>总Token</span></div>
+              <div class="ds"><b id="whDashRuntime">--</b><span>总时长</span></div>
+              <div class="ds"><b id="whDashAvgTime">--</b><span>平均耗时</span></div>
+              <div class="ds"><b id="whDashSuccess">--</b><span>完成率</span></div>
+            </div>
+            <div class="dash-stats">
+              <div class="ds"><b id="whDashInput">--</b><span>输入Token</span></div>
+              <div class="ds"><b id="whDashOutput">--</b><span>输出Token</span></div>
+              <div class="ds"><b id="whDashTodayTasks">--</b><span>今日任务</span></div>
+              <div class="ds"><b id="whDashTodayTokens">--</b><span>今日Token</span></div>
+              <div class="ds"><b id="whDashCost">--</b><span>累计花费</span></div>
+            </div>
+            <div class="dash-divider"></div>
+            <!-- 热力图 -->
+            <div class="dash-section dash-sec-heat">
+              <div class="dash-section-title">工作强度</div>
+              <div class="dash-hm-block">
+                <div class="dash-hm-grid" id="dashHeatmap"></div>
+                <div class="dash-hm-legend"><span>少</span><i class="lv0"></i><i class="lv1"></i><i class="lv2"></i><i class="lv3"></i><i class="lv4"></i><span>多</span></div>
+              </div>
+            </div>
+            <div class="dash-divider"></div>
+            <!-- 昼夜分布 -->
+            <div class="dash-section dash-sec-curve">
+              <div class="dash-section-title">昼夜分布</div>
+              <div class="dash-curve-wrap">
+                <svg class="dash-curve" id="dashCurve" viewBox="0 0 240 60" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="curveGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#18181b" stop-opacity="0.15"/>
+                      <stop offset="100%" stop-color="#18181b" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path id="curveArea" fill="url(#curveGrad)" vector-effect="non-scaling-stroke" />
+                  <path id="curveLine" fill="none" stroke="#18181b" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+                </svg>
+                <div class="dash-curve-labels">
+                  <span>0</span><span>6</span><span>12</span><span>18</span><span>24</span>
+                </div>
+              </div>
+            </div>
+            <div class="dash-divider"></div>
+            <!-- 近7天 -->
+            <div class="dash-section dash-sec-trend">
+              <div class="dash-section-title">近 7 天</div>
+              <div class="dash-trend" id="dashTrend"></div>
+            </div>
+          </div>
+          <!-- 状态卡 -->
+          <div class="wh-status-card">
+            <div class="wh-status-row">
+              <svg class="wh-status-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span class="wh-status-label">激活状态</span>
+              <span class="wh-status-val" id="whInfoActivate">--</span>
+            </div>
+            <div class="wh-status-row">
+              <svg class="wh-status-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+              <span class="wh-status-label">当前模型</span>
+              <span class="wh-status-val" id="whInfoModel">--</span>
+            </div>
+          </div>
+        </div>
+        <!-- 右列：公告 -->
+        <div class="wh-right-col">
+          <div class="wh-notice-card" id="whNotice">
+            <p class="wh-notice-head"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> 公告</p>
+            <div class="wh-notice-body">
+              <p class="wh-notice-title" id="whNoticeTitle">加载中...</p>
+              <p class="wh-notice-desc" id="whNoticeDesc"></p>
+            </div>
+            <div class="wh-notice-foot">
+              <button class="wh-notice-nav" id="whNoticePrev"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+              <span class="wh-notice-dots" id="whNoticeDots"></span>
+              <button class="wh-notice-nav" id="whNoticeNext"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div id="taskPanel" class="panel flex-1 min-h-0">
+      <div class="task-v4">
+        <!-- 任务准备区 -->
+        <div id="taskUploadSection" class="task-upload-section">
+          <div class="task-layout">
+            <!-- 左侧：运行记录 -->
+            <div class="task-left-col">
+              <div class="task-left-header">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>运行记录</span>
+                <button class="task-new-btn" onclick="Mrite._onNewTask()" title="新建任务">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  新建
+                </button>
+              </div>
+              <div id="taskHistoryList" class="task-history-list">
+                <div class="task-history-empty">暂无运行记录</div>
+              </div>
+            </div>
+            <!-- 右侧 -->
+            <div class="task-right-col">
+              <!-- 项目名称 -->
+              <div class="task-project-bar">
+                <label>项目名称</label>
+                <input type="text" id="taskProjectName" class="task-input" placeholder="输入项目名称（必填）" onchange="Mrite._onProjectNameChange()" oninput="Mrite._onProjectNameChange()">
+              </div>
+              <!-- 文件上传区（一个容器，中间分割线） -->
+              <div class="task-file-zone" id="dropZoneAll">
+                <div class="task-file-half" id="dropZoneTopic" data-type="topic">
+                  <div class="task-file-header">
+                    <div class="task-file-header-left">
+                      <div class="task-file-icon-wrap topic">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      </div>
+                      <div class="task-file-title">
+                        <span class="task-file-label">赛题文件</span>
+                        <span class="task-file-hint">PDF / DOCX / 图片</span>
+                      </div>
+                    </div>
+                    <button class="task-file-text-btn" onclick="window._onTopicUpload?.()">上传</button>
+                  </div>
+                  <div class="task-file-body" id="topicFileList" onclick="window._onTopicUpload?.()">
+                    <div class="task-file-empty">点击上传</div>
+                  </div>
+                </div>
+                <div class="task-file-divider"></div>
+                <div class="task-file-half" id="dropZoneData" data-type="data">
+                  <div class="task-file-header">
+                    <div class="task-file-header-left">
+                      <div class="task-file-icon-wrap data">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+                      </div>
+                      <div class="task-file-title">
+                        <span class="task-file-label">数据文件</span>
+                        <span class="task-file-hint">Excel / CSV / 图片</span>
+                      </div>
+                    </div>
+                    <button class="task-file-text-btn" onclick="window._onDataUpload?.()">上传</button>
+                  </div>
+                  <div class="task-file-body" id="dataFileList" onclick="window._onDataUpload?.()">
+                    <div class="task-file-empty">点击上传</div>
+                  </div>
+                </div>
+              </div>
+              <!-- 下半区 -->
+              <div class="task-bottom-area">
+                <!-- 左侧：模板面板 -->
+                <div class="task-tpl-panel">
+                  <div class="task-panel-header">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                    <span>赛题模板</span>
+                  </div>
+                  <div class="task-tpl-select" id="taskTplSelect">
+                    <div class="task-tpl-empty">加载中...</div>
+                  </div>
+                </div>
+                <!-- 右侧 -->
+                <div class="task-right-bottom">
+                  <!-- 求解强度 -->
+                  <div class="task-mode-panel task-mode-disabled">
+                    <div class="task-panel-header">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                      <span>求解强度</span>
+                      <span class="mode-tag">测试阶段 · 此功能停用</span>
+                    </div>
+                    <div class="task-mode-body">
+                      <div class="mode-switch" id="modeSwitch">
+                        <div class="mode-track">
+                          <div class="mode-thumb" id="modeThumb"></div>
+                          <span class="mode-opt active" data-val="auto" onclick="Mrite._setMode(0)">Pro</span>
+                          <span class="mode-opt" data-val="full" onclick="Mrite._setMode(1)">Max</span>
+                          <span class="mode-opt" data-val="verify" onclick="Mrite._setMode(2)">Ultra</span>
+                        </div>
+                      </div>
+                      <span class="mode-desc" id="modeDesc">全自动运行，无需人工干预</span>
+                    </div>
+                  </div>
+                  <!-- 赛题信息 -->
+                  <div class="task-info-panel">
+                    <div class="task-panel-header">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      <span>赛题信息</span>
+                    </div>
+                    <div class="task-info-fields">
+                      <div class="task-info-row">
+                        <label>队伍编号</label>
+                        <input type="text" id="taskTeamCode" class="task-input" placeholder="MC25001" onchange="Mrite._onTaskConfigChange()">
+                        <label class="task-mini-toggle"><input type="checkbox" id="taskToggleTeamCode"><span></span></label>
+                      </div>
+                      <div class="task-info-row">
+                        <label>题&#12288;&#12288;号</label>
+                        <input type="text" id="taskProblemNum" class="task-input" placeholder="A" onchange="Mrite._onTaskConfigChange()">
+                        <label class="task-mini-toggle"><input type="checkbox" id="taskToggleProblemNum"><span></span></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 操作按钮 -->
+              <div class="task-action-row">
+                <button id="btnTaskRun" class="task-run-btn" onclick="Mrite.onTaskRun()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  <span>运行求解</span>
+                </button>
+                <button class="task-action-btn" onclick="Mrite._resetConfig()" title="恢复默认配置">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                </button>
+                <button class="task-action-btn" onclick="Mrite.onRemoveFiles()" title="清空工作区">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 任务运行区 -->
+        <div id="taskExecSection" class="task-exec-section hidden">
+        <div class="exec-layout">
+          <!-- 左列：进度条 + 对话窗口 -->
+          <div class="exec-left">
+            <div class="exec-progress" id="progressWrap">
+              <div class="progress-track">
+                <div class="progress-shimmer"></div>
+                <div id="progressBarFill" class="progress-fill"></div>
+                <span id="progressText" class="task-v4-pct">0%</span>
+              </div>
+            </div>
+            <div class="task-v4-chat-col">
+            <div class="task-v4-title-left" id="dialogTitleBar">
+              <span id="dialogTitleText" class="task-v4-title-text">对话窗口</span>
+              <span id="dialogProjectBadge" class="dialog-project-badge hidden">
+                <span id="dialogProjectName"></span>
+                <button id="dialogProjectClose" class="dialog-project-close" title="解除项目" onclick="Mrite.unloadProject()">x</button>
+              </span>
+              <span id="dialogModePill" class="dialog-mode-pill">求解强度</span>
+            </div>
+            <div id="modifyChatHistory" class="task-v4-chat-area"></div>
+            <div class="task-v4-input-area" id="taskDialogV4">
+              <div class="mod-input-row">
+                <input id="modifyInput" type="text" placeholder="输入修改指令..." class="mod-input" onkeydown="if(event.key==='Enter')Mrite.modifySend()" disabled>
+                <button id="modifySend" class="mod-send-btn" onclick="Mrite.modifySend()" disabled>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          </div>
+          <!-- 右列：按钮 + 操作记录 -->
+          <div class="exec-right">
+            <div class="exec-ctrl">
+              <button id="btnRunPause" class="exec-btn exec-btn-primary" onclick="Mrite.onRunPause()">
+                <span id="runPauseLabel">运行</span>
+              </button>
+              <button id="btnExitExec" class="exec-btn exec-btn-ghost" onclick="Mrite._exitExec()">退出</button>
+              <div class="mode-switch-track" id="modeSwitchTrack">
+                <div class="mode-switch-thumb"></div>
+                <span class="mode-switch-opt active" data-mode="solve" onclick="Mrite._switchMode('solve')">求解</span>
+                <span class="mode-switch-opt" data-mode="modify" onclick="Mrite._switchMode('modify')">修改</span>
+              </div>
+            </div>
+            <div class="task-v4-ops-col">
+            <div class="task-v4-title-right">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              <span id="opsPanelTitle">操作记录</span>
+            </div>
+            <div id="taskToolOps" class="task-v4-ops-list">
+              <div class="task-v4-empty">等待任务开始...</div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div id="stepList" class="hidden"></div>
+        <!-- 实时结果面板（在 taskExecSection 内部） -->
+        <div id="liveResultPanel" class="live-result-panel">
+          <div class="lp-main">
+            <div class="lp-sidebar" id="lpFileList"></div>
+            <div class="lp-preview" id="lpPreview"></div>
+          </div>
+          <div class="lp-bar">
+            <div class="lp-bar-left">
+              <span class="lp-bar-title">实时结果</span>
+              <span class="lp-bar-count" id="lpFileCount"></span>
+            </div>
+            <div class="lp-bar-right">
+              <div class="lp-tabs">
+                <div class="lp-tab active" data-tab="image" onclick="Mrite._liveSwitchTab('image')">图片</div>
+                <div class="lp-tab" data-tab="table" onclick="Mrite._liveSwitchTab('table')">表格</div>
+                <div class="lp-tab" data-tab="paper" onclick="Mrite._liveSwitchTab('paper')">论文</div>
+              </div>
+              <button class="lp-toggle-btn" id="lpToggleBtn" onclick="Mrite._toggleLivePanel()" title="展开/折叠">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 15 12 9 18 15"/></svg>
+                <span>展开</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        </div>
+    </div>
+  </div>
+
+<div id="viewPanel" class="panel flex-1 min-h-0 flex flex-col overflow-hidden">
+      <div class="flex gap-5 flex-1 min-h-0">
+        <div class="view-left-col">
+          <div class="flex-1 min-h-0 rounded-xl border border-zinc-200 bg-white flex flex-col overflow-hidden">
+            <div class="view-card-header">
+              <span class="view-card-header-text">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                历史任务
+              </span>
+              <button id="btnRefresh" class="view-refresh-btn" title="刷新列表" onclick="Mrite.refreshViewPanel()">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+              </button>
+            </div>
+            <div id="historyList" class="flex-1 overflow-y-auto"></div>
+          </div>
+        </div>
+        <div class="view-right-col rounded-xl border border-zinc-200 bg-white flex flex-col overflow-hidden">
+          <div class="view-card-header">
+            <span class="view-card-header-text">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+              文件浏览器
+            </span>
+            <div class="fv-toggle-group">
+              <button id="fvBtnFile" class="fv-toggle-btn active" onclick="Mrite._setViewMode('file')">文件</button>
+              <button id="fvBtnPreview" class="fv-toggle-btn" onclick="Mrite._setViewMode('preview')">预览</button>
+            </div>
+          </div>
+          <div id="fileTree" class="flex-1 overflow-y-auto text-xs"></div>
+          <div id="filePreview" class="flex-1 overflow-y-auto" style="display:none;">
+            <div class="fv-empty">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" class="text-zinc-300"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <p>点击文件树中的文件进行预览</p>
+              <p class="text-[10px] text-zinc-300 mt-1">支持代码、图片、CSV、PDF</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="settingsPanel" class="panel flex-1 min-h-0 flex flex-col overflow-hidden">
+      <div class="flex gap-0 flex-1 min-h-0">
+        <div class="set-nav-col">
+          <div class="set-nav-group">账号</div>
+          <div class="set-nav-item active" data-section="usage" onclick="Mrite._navToSection(this,'usage');setTimeout(function(){Mrite.renderUsageStats()},100)">用量统计</div>
+          <div class="set-nav-group">赛题设置</div>
+          <div class="set-nav-item" data-section="project" onclick="Mrite._navToSection(this,'project')">赛题模板</div>
+          <div class="set-nav-item" data-section="contest" onclick="Mrite._navToSection(this,'contest')">求解配置</div>
+          <div class="set-nav-item" data-section="output" onclick="Mrite._navToSection(this,'output')">输出路径</div>
+          <div class="set-nav-group">系统设置</div>
+          <div class="set-nav-item" data-section="system" onclick="Mrite._navToSection(this,'system')">模型配置</div>
+          <div class="set-nav-item" data-section="logs" onclick="Mrite._navToSection(this,'logs')">诊断日志</div>
+          <div class="flex-1"></div>
+          <div class="set-nav-about">
+            <img src="../assets/icons/icon_128.png" width="50" height="50" class="set-nav-logo" alt="Mrite">
+            <div class="set-nav-about-text">
+              <p class="set-nav-app-name">Mrite</p>
+              <p class="set-nav-app-ver">v2.1.0</p>
+            </div>
+          </div>
+        </div>
+        <div id="settingsContent" class="set-content-col">
+          <div class="set-section-panel" data-section="system">
+            <h3 class="set-panel-title">模型配置</h3>
+
+            <!-- 当前 API 配置 hero 卡片 -->
+            <div class="api-hero" id="apiHeroCard">
+              <div class="api-hero-left">
+                <img id="apiHeroIcon" src="../assets/icons/providers/custom.svg" class="api-hero-icon" onerror="this.src='../assets/icons/providers/custom.svg'">
+                <div class="api-hero-info">
+                  <div class="api-hero-model" id="apiHeroModel">未配置</div>
+                  <div class="api-hero-meta" id="apiHeroMeta">请在下方选择服务商并配置 API</div>
+                </div>
+              </div>
+              <div class="api-hero-right">
+                <span class="api-hero-status" id="apiHeroStatus">未连接</span>
+              </div>
+            </div>
+
+            <div class="sys-block">
+              <div class="sys-block-header">API 配置</div>
+
+              <!-- 供应商卡片网格 -->
+              <div class="provider-grid" id="providerGrid">
+                <div class="provider-card" data-provider="deepseek" onclick="Mrite._selectProvider('deepseek')">
+                  <span class="provider-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M3 18v-4h3l4-9 4 6 4-5 3 7v5H3z"/></svg>推荐</span>
+                  <img src="../assets/icons/providers/deepseek.ico" class="provider-icon" alt="DeepSeek">
+                  <span class="provider-name">DeepSeek</span>
+                </div>
+                <div class="provider-card" data-provider="xiaomi" onclick="Mrite._selectProvider('xiaomi')">
+                  <img src="../assets/icons/providers/xiaomi.png" class="provider-icon" alt="小米">
+                  <span class="provider-name">小米 MiMo</span>
+                </div>
+                <div class="provider-card" data-provider="anthropic" onclick="Mrite._selectProvider('anthropic')">
+                  <img src="../assets/icons/providers/anthropic.png" class="provider-icon" alt="Claude">
+                  <span class="provider-name">Claude</span>
+                </div>
+                <div class="provider-card" data-provider="custom" onclick="Mrite._selectProvider('custom')">
+                  <span class="provider-icon provider-icon-custom">⚙</span>
+                  <span class="provider-name">自定义</span>
+                </div>
+              </div>
+
+              <p class="api-format-hint">仅支持 Anthropic Messages API 格式端点（URL 含 <code>/anthropic</code> 或 <code>api.anthropic.com</code>）</p>
+
+              <!-- API 配置表单 -->
+              <div class="api-detail-form" id="apiDetailForm">
+                <div class="api-form-row">
+                  <div class="set-fields" style="flex:1">
+                    <label>API 端点（Base URL）</label>
+                    <input id="inputApiBase" type="text" class="set-input" placeholder="例如 https://api.deepseek.com" oninput="Mrite._autoSaveSettings()">
+                  </div>
+                  <div class="set-fields" style="flex:1">
+                    <label>模型名称</label>
+                    <input id="inputApiModel" type="text" class="set-input" placeholder="选择或手动输入模型名" oninput="Mrite._autoSaveSettings()">
+                  </div>
+                </div>
+                <div class="api-form-row">
+                  <div class="set-fields" style="flex:1">
+                    <label>API Key</label>
+                    <div style="display:flex;gap:8px">
+                      <input id="inputApiKey" type="password" class="set-input" style="flex:1" placeholder="粘贴你的 API Key" oninput="Mrite._autoSaveSettings()">
+                      <button class="api-save-btn" onclick="Mrite._saveCurrentApiConfig()">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                        保存配置
+                      </button>
+                    </div>
+                    <p class="api-key-hint" id="apiKeyHint" style="display:none">
+                      还没有 Key？点击 <a href="#" id="apiKeyLoginLink" target="_blank">登录控制台</a> 注册账号并创建 API Key，具体步骤请查看 <a href="#" id="apiKeyDocLink" target="_blank">API 文档</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 已保存的配置 -->
+            <div class="sys-block">
+              <div class="sys-block-header">已保存的配置</div>
+              <div class="saved-models-list" id="savedModelsList">
+                <div class="saved-models-empty">填写配置后点击「保存配置」添加</div>
+              </div>
+            </div>
+          </div>
+          <div class="set-section-panel" data-section="project">
+            <h3 class="set-panel-title">赛题模板</h3>
+            <p class="set-panel-desc">选择求解使用的论文模板和项目结构，切换后将清空当前工作区。</p>
+            <div class="tpl-box">
+              <div class="tpl-hero">
+                <span class="tpl-hero-badge">当前使用</span>
+                <span id="tplCurrentName" class="tpl-hero-name">加载中...</span>
+                <button class="tpl-refresh-btn" onclick="Mrite._loadProjectList()" title="刷新">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                </button>
+                <button class="tpl-refresh-btn" onclick="Mrite._uploadTemplate()" title="上传模板">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </button>
+              </div>
+              <div class="tpl-divider"></div>
+              <div id="tplList" class="tpl-list tpl-scroll">
+                <div class="tpl-empty">加载中...</div>
+              </div>
+            </div>
+            <select id="projectSelect" class="hidden"></select>
+          </div>
+          <div class="set-section-panel" data-section="contest">
+            <h3 class="set-panel-title">求解配置</h3>
+            <p class="set-panel-desc">开启开关后，对应信息将在求解时自动注入提示词并写入论文封面。</p>
+            <div class="cfg-card">
+              <div class="cfg-card-head">队伍信息</div>
+              <div class="cfg-list">
+                <div class="cfg-row">
+                  <span class="cfg-label">队伍编号</span>
+                  <input id="inputTeamCode" type="text" placeholder="例如 MC25001" class="cfg-input" oninput="Mrite._autoSaveSettings()">
+                  <label class="cfg-toggle"><input type="checkbox" id="toggleTeamCode" onchange="Mrite._onSolveToggle('teamCode')"><span></span></label>
+                </div>
+                <div class="cfg-row">
+                  <span class="cfg-label">题　　号</span>
+                  <input id="inputProblemNumber" type="text" placeholder="例如 A、B、C" class="cfg-input" oninput="Mrite._autoSaveSettings()">
+                  <label class="cfg-toggle"><input type="checkbox" id="toggleProblemNum" onchange="Mrite._onSolveToggle('problemNumber')"><span></span></label>
+                </div>
+                <div class="cfg-row">
+                  <span class="cfg-label">学校名称</span>
+                  <input id="inputSchool" type="text" placeholder="例如 清华大学" class="cfg-input" oninput="Mrite._autoSaveSettings()">
+                  <label class="cfg-toggle"><input type="checkbox" id="toggleSchool" onchange="Mrite._onSolveToggle('school')"><span></span></label>
+                </div>
+                <div class="cfg-row">
+                  <span class="cfg-label">队　　员</span>
+                  <input id="inputMembers" type="text" placeholder="张三, 李四, 王五" class="cfg-input" oninput="Mrite._autoSaveSettings()">
+                  <label class="cfg-toggle"><input type="checkbox" id="toggleMembers" onchange="Mrite._onSolveToggle('members')"><span></span></label>
+                </div>
+                <div class="cfg-row">
+                  <span class="cfg-label">指导老师</span>
+                  <input id="inputAdvisor" type="text" placeholder="例如 阮老师" class="cfg-input" oninput="Mrite._autoSaveSettings()">
+                  <label class="cfg-toggle"><input type="checkbox" id="toggleAdvisor" onchange="Mrite._onSolveToggle('advisor')"><span></span></label>
+                </div>
+              </div>
+            </div>
+            <div class="cfg-card">
+              <div class="cfg-card-head">写作语言</div>
+              <div class="cfg-lang-row">
+                <div class="cfg-lang-opt active" onclick="Mrite._switchLang(this,'zh')">中文写作</div>
+                <div class="cfg-lang-opt" onclick="Mrite._switchLang(this,'en')">English Writing</div>
+              </div>
+            </div>
+            <div class="cfg-card">
+              <div class="cfg-card-head"><span>生成风格 <span class="cfg-beta-tag">Beta</span></span><label class="cfg-toggle"><input type="checkbox" id="toggleStyle" onchange="Mrite._onSolveToggle('style')"><span></span></label></div>
+              <textarea id="inputStylePrompt" placeholder="自定义论文风格提示词，如「使用简洁学术风格」「多用图表少用公式」等…" class="cfg-textarea" maxlength="150" oninput="Mrite._autoSaveSettings()"></textarea>
+              <div class="cfg-style-hint"><span>实验室功能 · 可能产生负优化 · 限150字</span></div>
+            </div>
+            <div class="cfg-card cfg-card-locked">
+              <div class="cfg-card-head"><span>图表配色 <span class="cfg-lock-tag">内测中</span></span><label class="cfg-toggle"><span></span></label></div>
+              <div class="cfg-chip-row">
+                <span class="cfg-chip active">学术经典</span>
+                <span class="cfg-chip">现代简约</span>
+                <span class="cfg-chip">高对比度</span>
+                <span class="cfg-chip">柔和配色</span>
+              </div>
+            </div>
+            <div class="cfg-card cfg-card-locked">
+              <div class="cfg-card-head"><span>摘要风格 <span class="cfg-lock-tag">内测中</span></span><label class="cfg-toggle"><span></span></label></div>
+              <div class="cfg-chip-row">
+                <span class="cfg-chip active">详细展开</span>
+                <span class="cfg-chip">精简凝练</span>
+                <span class="cfg-chip">结构化分段</span>
+              </div>
+            </div>
+            <div class="cfg-card cfg-card-locked">
+              <div class="cfg-card-head"><span>参考文献 <span class="cfg-lock-tag">内测中</span></span><label class="cfg-toggle"><span></span></label></div>
+              <div class="cfg-chip-row">
+                <span class="cfg-chip active">GB/T 7714</span>
+                <span class="cfg-chip">APA 7th</span>
+                <span class="cfg-chip">IEEE</span>
+              </div>
+            </div>
+            <div class="cfg-card cfg-card-locked">
+              <div class="cfg-card-head"><span>流程图风格 <span class="cfg-lock-tag">内测中</span></span><label class="cfg-toggle"><span></span></label></div>
+              <div class="cfg-chip-row">
+                <span class="cfg-chip active">标准框线</span>
+                <span class="cfg-chip">圆角卡片</span>
+                <span class="cfg-chip">简约箭头</span>
+              </div>
+            </div>
+            <div class="cfg-card cfg-card-locked">
+              <div class="cfg-card-head"><span>量化约束 <span class="cfg-lock-tag">内测中</span></span><label class="cfg-toggle"><span></span></label></div>
+              <div class="qc-grid">
+                <div class="qc-item"><span class="qc-label">页数</span><div class="qc-range"><input type="number" class="qc-num" placeholder="15" min="1" max="50" disabled><span class="qc-dash">–</span><input type="number" class="qc-num" placeholder="25" min="1" max="50" disabled></div></div>
+                <div class="qc-item"><span class="qc-label">图片</span><div class="qc-range"><input type="number" class="qc-num" placeholder="6" min="0" max="50" disabled><span class="qc-dash">–</span><input type="number" class="qc-num" placeholder="12" min="0" max="50" disabled></div></div>
+                <div class="qc-item"><span class="qc-label">公式</span><div class="qc-range"><input type="number" class="qc-num" placeholder="10" min="0" max="80" disabled><span class="qc-dash">–</span><input type="number" class="qc-num" placeholder="30" min="0" max="80" disabled></div></div>
+                <div class="qc-item"><span class="qc-label">表格</span><div class="qc-range"><input type="number" class="qc-num" placeholder="2" min="0" max="20" disabled><span class="qc-dash">–</span><input type="number" class="qc-num" placeholder="6" min="0" max="20" disabled></div></div>
+              </div>
+              <div class="qc-hint">不填则随机生成 · 左为最小值 · 右为最大值</div>
+            </div>
+          </div>
+          <div class="set-section-panel" data-section="output">
+            <h3 class="set-panel-title">输出路径</h3>
+            <p class="set-panel-desc">求解结果和论文将自动同步到此目录。</p>
+            <div class="flex gap-2"><input id="inputOutputPath" type="text" placeholder="选择输出目录（必填）" class="set-input flex-1" oninput="Mrite._autoSaveSettings()"><button id="btnBrowseOutput" class="set-btn" onclick="window._onBrowseOutput?.()">浏览</button></div>
+          </div>
+          <div class="set-section-panel active" data-section="usage">
+            <h3 class="set-panel-title">用量统计</h3>
+            <div id="usageDashboard"><div class="ud-empty">暂无使用记录</div></div>
+          </div>
+          <div class="set-section-panel" data-section="logs">
+            <h3 class="set-panel-title">诊断日志</h3>
+            <p class="set-panel-desc">导出运行日志用于问题排查。</p>
+            <div class="sys-block">
+              <button id="btnExportLogs" class="set-btn set-btn-primary" onclick="window._onExportLogs?.()">导出诊断日志</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+</div>
+
+<script src="license-timer.js"></script>
+<script src="state.js"></script>
+<script src="agent-events.js"></script>
+<script src="toolbar.js"></script>
+<script src="panels/upload.js"></script>
+<script src="panels/progress.js"></script>
+<script src="panels/view.js"></script>
+<script src="panels/settings.js"></script>
+<script src="panels/modify.js"></script>
+<script src="panels/dashboard.js"></script>
+<script src="ui.js"></script>
+<script src="index.js"></script>
+
+<!-- 图片预览弹窗 -->
+<div id="imgPreviewOverlay" class="img-preview-overlay" style="display:none">
+  <button class="img-preview-close" onclick="Mrite._closeImgPreview()">×</button>
+  <div class="img-preview-content">
+    <img id="imgPreviewImg" src="" alt="preview">
+  </div>
+  <div class="img-preview-nav">
+    <button id="imgPreviewPrev" onclick="Mrite._imgPreviewNav(-1)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <span id="imgPreviewInfo" class="img-preview-info"></span>
+    <button id="imgPreviewNext" onclick="Mrite._imgPreviewNav(1)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</div>
+<div id="tablePreviewOverlay" class="table-preview-overlay" style="display:none">
+  <div class="table-preview-panel">
+    <div class="table-preview-header">
+      <span id="tablePreviewTitle">表格预览</span>
+      <button class="table-preview-close" onclick="Mrite._closeTablePreview()">×</button>
+    </div>
+    <div id="tablePreviewBody" class="table-preview-body"></div>
+  </div>
+</div>
+</body>
+</html>

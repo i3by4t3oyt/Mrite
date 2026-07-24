@@ -1,0 +1,286 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════
+   Mrite v1.4 — 全新设计
+   干净、现代、专业
+   ═══════════════════════════════════════════════ */
+
+/* ── 工具栏按钮 ── */
+.t-btn {
+  @apply inline-flex items-center px-3 h-7 rounded-md text-[13px] font-medium
+         border cursor-pointer transition-all duration-150 whitespace-nowrap;
+}
+/* 禁用态：字变浅灰，背景发灰，边框保留本色 */
+.t-btn:disabled { @apply pointer-events-none text-zinc-300 bg-zinc-50; cursor: not-allowed; }
+
+/* 上传 — 白底黑字 */
+.t-btn.t-upload { @apply bg-white border-zinc-300 text-zinc-700 hover:bg-zinc-50 hover:border-zinc-400; }
+
+/* 运行 idle — 蓝色 */
+.t-btn.t-primary { @apply bg-blue-500 border-blue-500 text-white hover:bg-blue-400 hover:border-blue-400; }
+/* 运行中 → 暂停 — 橙色 */
+.t-btn.t-pause { @apply bg-amber-500 border-amber-500 text-white hover:bg-amber-400 hover:border-amber-400; }
+/* 暂停中 → 继续 — 绿色 */
+.t-btn.t-resume { @apply bg-emerald-500 border-emerald-500 text-white hover:bg-emerald-400 hover:border-emerald-400; }
+
+/* 中止 idle — 红色边框 + 灰字 */
+.t-btn.t-stop-idle { @apply border-red-200 bg-white; }
+/* 中止 running — 红色 */
+.t-btn.t-danger { @apply border-red-200 text-red-500 hover:bg-red-50 hover:border-red-300 hover:text-red-600; }
+.t-btn.t-danger.running { animation: pulse-danger 1.2s ease-in-out infinite; }
+/* 中止 done — 绿色复原 */
+.t-btn.t-reset { @apply bg-emerald-500 border-emerald-500 text-white hover:bg-emerald-400; }
+
+/* 文件 / 设置 — 白底黑字 */
+.t-btn.t-dark { @apply bg-white border-zinc-300 text-zinc-700 hover:bg-zinc-50 hover:border-zinc-400; }
+
+/* ── 状态指示器 ── */
+.status-dot { @apply w-[6px] h-[6px] rounded-full bg-zinc-300 shrink-0; }
+.status-dot.status-ready { @apply bg-emerald-500; }
+.status-dot.status-running { @apply bg-amber-500; animation: pulse-dot 1.2s ease-in-out infinite; }
+.status-dot.status-error { @apply bg-red-500; }
+
+/* ── 面板入场 ── */
+.panel { animation: slide-in 150ms ease-out; }
+
+/* ── 上传按钮（左栏，固定大小，图标上文字下）── */
+.up-btn {
+  @apply flex flex-col items-center justify-center gap-1.5 h-[100px] rounded-xl border
+         cursor-pointer transition-all duration-150 w-full;
+  border: none;
+  font-family: inherit;
+}
+.up-btn svg { @apply w-6 h-6 shrink-0; }
+.up-btn .font-medium { @apply text-[13px]; }
+.up-btn-sub { @apply text-[10px] opacity-50; }
+.up-btn-topic  { @apply bg-blue-50 text-blue-600 hover:bg-blue-100; }
+.up-btn-data   { @apply bg-emerald-50 text-emerald-600 hover:bg-emerald-100; }
+
+/* ── 文件列表区（右栏）── */
+.upload-section-title {
+  @apply flex items-center gap-1.5 px-3 py-1.5 bg-zinc-50 text-[11px] font-semibold text-zinc-500;
+}
+.upload-section-title svg { @apply text-zinc-400 shrink-0; }
+.upload-file {
+  @apply flex items-center gap-2 px-3 py-1.5 hover:bg-zinc-50 transition-colors;
+}
+.upload-file-icon {
+  @apply w-6 h-6 rounded-md flex items-center justify-center shrink-0;
+}
+.upload-file-icon svg { @apply w-3.5 h-3.5; }
+.upload-file-icon.doc  { @apply bg-blue-50 text-blue-500; }
+.upload-file-icon.xls  { @apply bg-emerald-50 text-emerald-500; }
+.upload-file-icon.img  { @apply bg-purple-50 text-purple-500; }
+.upload-file-icon.code { @apply bg-amber-50 text-amber-500; }
+.upload-file-icon.folder { @apply bg-sky-50 text-sky-500; }
+.upload-file-name {
+  @apply flex-1 text-[12px] font-medium text-zinc-700 truncate;
+}
+.upload-file-meta {
+  @apply text-[10px] text-zinc-400;
+}
+.upload-file-del {
+  @apply w-5 h-5 flex items-center justify-center rounded-full text-zinc-300
+         hover:bg-red-50 hover:text-red-400 cursor-pointer transition-colors text-[12px] shrink-0;
+}
+
+/* ── 进度 ── */
+.progress-track {
+  @apply h-1.5 bg-zinc-100 rounded-full overflow-hidden relative;
+}
+.progress-shimmer {
+  @apply absolute inset-0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 40%, rgba(255,255,255,0.6) 60%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+  z-index: 1;
+}
+.progress-fill {
+  @apply h-full bg-zinc-900 rounded-full transition-[width] duration-500 ease-out w-0 relative z-0;
+}
+#progressBarFill.done { @apply bg-emerald-500; }
+
+/* ── 步骤列表 ── */
+.step-item { @apply flex items-center gap-2.5 px-3 py-2 rounded-lg text-[12px] transition-colors; }
+.step-item:hover { @apply bg-zinc-50; }
+.step-item .step-status-icon { @apply w-5 h-5 flex items-center justify-center rounded-full text-[10px] font-bold shrink-0; }
+.step-item .step-name { @apply flex-1 text-zinc-600; }
+.step-item .step-duration { @apply text-[11px] text-zinc-300 font-mono shrink-0; }
+
+.step-item.status-pending .step-name { @apply text-zinc-300; }
+.step-item.status-pending .step-status-icon { @apply bg-zinc-100 text-zinc-300; }
+
+.step-item.status-completed .step-name { @apply text-emerald-700; }
+.step-item.status-completed .step-status-icon { @apply bg-emerald-100 text-emerald-500; }
+.step-item.status-completed .step-duration { @apply text-emerald-500; }
+
+.step-item.status-active .step-name { @apply text-amber-700 font-semibold; }
+.step-item.status-active .step-status-icon { @apply bg-amber-100 text-amber-500; animation: icon-blink 0.6s ease-in-out infinite; }
+.step-item.status-active { @apply bg-amber-50; animation: active-pulse 1.5s ease-in-out infinite; }
+
+.step-item.status-error .step-name { @apply text-red-600; }
+.step-item.status-error .step-status-icon { @apply bg-red-100 text-red-500; }
+
+.step-phase-header { @apply text-[11px] font-bold text-zinc-400 uppercase tracking-wider px-3 pt-4 pb-1; }
+
+/* ── 文件标签 ── */
+.file-tag { @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] bg-zinc-100 text-zinc-600; }
+.file-tag .file-tag-name { @apply max-w-[140px] truncate; }
+.file-tag .file-tag-remove { @apply cursor-pointer text-zinc-300 hover:text-red-400 transition-colors; }
+.file-tag.folder { @apply bg-emerald-50 text-emerald-600; }
+
+/* ── 文件树 ── */
+.tree-node-header { @apply flex items-center gap-1 px-1 py-0.5 rounded cursor-pointer hover:bg-zinc-50 transition-colors; }
+.tree-toggle { @apply w-4 text-[10px] text-zinc-300 text-center font-mono transition-transform; }
+.tree-toggle.expanded { @apply rotate-90; }
+.tree-icon { @apply text-xs text-zinc-400; }
+.tree-name { @apply text-zinc-600; }
+.tree-name.file { @apply cursor-pointer hover:text-blue-600 hover:underline; }
+.tree-children { @apply ml-4; }
+.tree-children.collapsed { @apply hidden; }
+.tree-empty { @apply text-zinc-300 text-center py-8; }
+
+/* ── 设置面板 ── */
+.set-section { @apply mb-5; }
+.set-title { @apply text-[13px] font-semibold text-zinc-800 mb-2; }
+.set-rows { @apply flex flex-col gap-1; }
+.set-fields { @apply flex flex-col gap-1.5; }
+.set-fields label { @apply text-[11px] text-zinc-400 font-medium; }
+.set-input { @apply h-[32px] px-2.5 rounded-lg border border-zinc-200 bg-white text-[13px] text-zinc-700
+                  outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-200 transition-all;
+            font-family: inherit; }
+.set-input::placeholder { @apply text-zinc-300; }
+.set-btn { @apply inline-flex items-center px-3 h-[32px] rounded-lg border border-zinc-200 bg-white
+                text-[12px] text-zinc-500 cursor-pointer hover:bg-zinc-50 hover:text-zinc-700
+                transition-all font-medium; }
+.set-btn-primary { @apply bg-zinc-900 text-white border-zinc-900 hover:bg-zinc-700 hover:text-white; }
+select.set-input { @apply appearance-none cursor-pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 8px center; padding-right: 32px; }
+
+/* ── 开关 ── */
+.toggle-switch {
+  @apply appearance-none w-8 h-5 rounded-full bg-zinc-200 cursor-pointer relative transition-colors duration-200;
+}
+.toggle-switch::after {
+  content: '';
+  @apply absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200;
+}
+.toggle-switch:checked { @apply bg-blue-500; }
+.toggle-switch:checked::after { transform: translateX(12px); }
+
+/* ── 环境行 ── */
+.env-row { @apply flex items-center justify-between px-3 py-2 rounded-lg bg-zinc-50 text-[12px]; }
+.env-status { @apply font-mono text-[11px]; }
+.env-status.env-pending { @apply text-zinc-300; }
+.env-status.env-ok { @apply text-emerald-600; }
+.env-status.env-fail { @apply text-red-500; }
+
+/* ── 邀请码 ── */
+.invite-dot { @apply w-[7px] h-[7px] rounded-full; }
+.invite-dot.invite-verified { @apply bg-emerald-500; }
+.invite-dot.invite-unverified { @apply bg-red-400; }
+.invite-dot.invite-verifying { @apply bg-amber-500; animation: pulse-dot 0.8s infinite; }
+
+/* ── 滚动条 ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { @apply bg-zinc-200 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-zinc-300; }
+
+/* ── Toast ── */
+.mrite-toast {
+  @apply fixed top-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full
+         bg-zinc-900 text-white text-[13px] font-medium shadow-lg
+         opacity-0 translate-y-[-8px] transition-all duration-300 z-[9999] pointer-events-none;
+}
+.mrite-toast.show { @apply opacity-100 translate-y-0; }
+
+/* ── 激活遮罩 ── */
+.activation-overlay {
+  @apply fixed inset-0 flex items-center justify-center z-[1000];
+  background: rgba(0,0,0,0.2); backdrop-filter: blur(12px);
+  animation: fade-in 200ms ease-out;
+}
+.activation-card {
+  @apply bg-white rounded-2xl p-8 w-[380px] shadow-2xl shadow-black/5 text-center;
+}
+.activation-title { @apply text-[18px] font-bold text-zinc-800 mb-1; }
+.activation-subtitle { @apply text-[13px] text-zinc-400 mb-6; }
+.activation-input {
+  @apply w-full h-10 px-4 rounded-xl border-2 border-zinc-200 text-[15px] text-center
+         text-zinc-800 outline-none focus:border-zinc-400 transition-colors;
+  font-family: inherit;
+}
+.activation-btn {
+  @apply mt-3 w-full h-10 rounded-xl bg-zinc-900 text-white text-[15px] font-semibold
+         cursor-pointer hover:bg-zinc-700 transition-colors;
+}
+.activation-btn:disabled { @apply opacity-30 cursor-not-allowed; }
+.activation-status { @apply mt-3 text-xs text-zinc-400; }
+.activation-status.error { @apply text-red-500; }
+
+/* ── 错误弹窗 ── */
+.error-overlay {
+  @apply fixed inset-0 flex items-center justify-center z-[10000];
+  background: rgba(0,0,0,0.3); backdrop-filter: blur(4px);
+}
+
+/* ═══════════════════════════════════════════════
+   动画
+   ═══════════════════════════════════════════════ */
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.3; transform: scale(0.7); }
+}
+@keyframes pulse-danger {
+  0%, 100% { color: #ef4444; }
+  50%      { color: #fca5a5; }
+}
+@keyframes active-pulse {
+  0%, 100% { background-color: rgba(251, 191, 36, 0.04); }
+  50%      { background-color: rgba(251, 191, 36, 0.12); }
+}
+@keyframes icon-blink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* ── 公告刷新按钮 ── */
+.wh-notice-refresh {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #a1a1aa;
+  padding: 2px 4px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  transition: all .15s;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.wh-notice-refresh:hover {
+  color: #18181b;
+  background: #f4f4f5;
+}
+.wh-notice-refresh.spinning svg {
+  animation: spin-360 0.6s linear;
+}
+@keyframes spin-360 {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
